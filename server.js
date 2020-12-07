@@ -15,6 +15,11 @@ app.use(cors());
 
 /* ============================== Routes ============================== */
 
-res.send('Server Started');
+app.get('/serverstarted', function(req, res){
+  console.log('Server Started Alan');
+  res.send('Server Started');
+});
 
 /* ======================== Callback Functions ======================== */
+
+app.listen(PORT, () => console.log(`server is up on port: ${PORT}`));
