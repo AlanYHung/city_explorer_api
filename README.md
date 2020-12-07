@@ -19,8 +19,8 @@ Allows a user to search for a location, present a Map, as well as interesting in
   * Number and name of feature: <u>Repository Setup</u>
   * Estimate of time needed to complete: <u>1 Hour</u>
   * Start time: <u>2:00</u>
-  * Finish time: <u></u>
-  * Actual time needed to complete: <u></u>
+  * Finish time: <u>3:15</u>
+  * Actual time needed to complete: <u>1 Hr 15 Min</u>
 
 #### Feature 2
   * Number and name of feature: <u>Location Search</u>
