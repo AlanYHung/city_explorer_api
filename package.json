@@ -1,0 +1,19 @@
+{
+  "name": "city_explorer_api",
+  "version": "1.0.0",
+  "description": "json package for Code 301 Lab 06",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlanYHung/city_explorer_api.git"
+  },
+  "author": "Alan Hung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlanYHung/city_explorer_api/issues"
+  },
+  "homepage": "https://github.com/AlanYHung/city_explorer_api#readme"
+}
