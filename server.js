@@ -27,15 +27,15 @@ app.use(cors());
 
 app.get('/location', (locReq, locRes) => {
   const locData = require('./data/location.json');
-  const instanceOfLocData = new locationObject(locData[0]);
-  locRes.send(`Location: ${instanceOfLocData.display_name}, Latitude: ${instanceOfLocData.lat}, Longitude: ${instanceOfLocData.lon}`);
+  const instanceOfLocData = new locationObject(locData[0], locReq);
+  locRes.send(instanceOfLocData);
 });
 
 app.get('/weather', (weatherReq, weatherRes) => {
   const weatherData = require('./data/weather.json');
   
   for(let i = 0; i < weatherData.data.length; i++){
-    weatherObjArr.push(new weatherObject(weatherData.data[i]));
+    weatherObjArr.push(new weatherObject(weatherData.data[i], weatherData.city_name));
   }
   
   weatherRes.send(weatherObjArr);    
@@ -50,18 +50,29 @@ app.listen(PORT, () => console.log(`server is up on port: ${PORT}`));
 
       /* ================== Object Constructor ================== */
 
-function locationObject(jsonLocationObj){
-  this.display_name = jsonLocationObj.display_name;
-  this.lat = jsonLocationObj.lat;
-  this.lon = jsonLocationObj.lon;
+function locationObject(jsonLocationObj, req){
+  this.place_id = jsonLocationObj.place_id;
+  this.licence = jsonLocationObj.licence;
+  this.osm_type = jsonLocationObj.osm_type;
+  this.osm_id = jsonLocationObj.osm_id;
+  this.boundingbox = jsonLocationObj.boundingbox;
+  this.latitude = jsonLocationObj.lat;
+  this.longitude = jsonLocationObj.lon;
+  this.formatted_query = jsonLocationObj.display_name;
+  this.class = jsonLocationObj.class;
+  this.type = jsonLocationObj.type;
+  this.importance = jsonLocationObj.importance;
+  this.icon = jsonLocationObj.icon;
+  this.search_query = 'seattle';
 }
 
-function weatherObject(jsonWeatherObj){
-  this.valid_date = jsonWeatherObj.valid_date;
+function weatherObject(jsonWeatherObj, city){
+  this.time = jsonWeatherObj.valid_date;
   this.wind_cdir = jsonWeatherObj.wind_cdir;
-  this.weatherDesc = jsonWeatherObj.weather.description;
+  this.forecast = jsonWeatherObj.weather.description;
   this.low_temp = jsonWeatherObj.low_temp;
   this.max_temp = jsonWeatherObj.max_temp;
+  this.city_name = city;
 }
 
       /* ===================== Getting Data ===================== */
