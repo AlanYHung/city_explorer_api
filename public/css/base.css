@@ -2,11 +2,3 @@
   box-sizing: border-box;
   width: 100vw;
 }
-
-header, section{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px black solid;
-  width: 100%;
-}

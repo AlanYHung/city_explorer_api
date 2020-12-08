@@ -25,9 +25,9 @@ Allows a user to search for a location, present a Map, as well as interesting in
 #### Feature 2
   * Number and name of feature: <u>Location Search</u>
   * Estimate of time needed to complete: <u>1 Hour</u>
-  * Start time: <u></u>
-  * Finish time: <u></u>
-  * Actual time needed to complete: <u></u>
+  * Start time: <u>3:28</u>
+  * Finish time: <u>5:12</u>
+  * Actual time needed to complete: <u>1 Hr 44 Min</u>
 
 #### Feature 3
   * Number and name of feature: <u>Display Weather of Location</u>
