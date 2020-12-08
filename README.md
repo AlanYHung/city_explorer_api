@@ -32,9 +32,9 @@ Allows a user to search for a location, present a Map, as well as interesting in
 #### Feature 3
   * Number and name of feature: <u>Display Weather of Location</u>
   * Estimate of time needed to complete: <u>1 Hour</u>
-  * Start time: <u></u>
-  * Finish time: <u></u>
-  * Actual time needed to complete: <u></u>
+  * Start time: <u>5:19</u>
+  * Finish time: <u>6:04</u>
+  * Actual time needed to complete: <u>45 Min</u>
 
 ## Resources
   * [Flexbox Basics from MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
