@@ -1,9 +1,14 @@
 'use strict';
 
+      /* =================== Global Variables =================== */
+
+      let weatherObjArr = [];
+
 /* ====================== Server Initialization ======================= */
 
 const express = require('express');
 const cors = require('cors');
+const { response } = require('express');
 require('dotenv').config();
 
 const app = express();
@@ -21,36 +26,42 @@ app.use(cors());
 // });
 
 app.get('/location', (locReq, locRes) => {
-  const locData = require('./public/data/location.json');
+  const locData = require('./data/location.json');
   const instanceOfLocData = new locationObject(locData[0]);
   locRes.send(`Location: ${instanceOfLocData.display_name}, Latitude: ${instanceOfLocData.lat}, Longitude: ${instanceOfLocData.lon}`);
 });
 
+app.get('/weather', (weatherReq, weatherRes) => {
+  const weatherData = require('./data/weather.json');
+  
+  for(let i = 0; i < weatherData.data.length; i++){
+    weatherObjArr.push(new weatherObject(weatherData.data[i]));
+  }
+  
+  weatherRes.send(weatherObjArr);    
+});
 
 /* ======================== Callback Functions ======================== */
 
-app.use(express.static('./public'));
+app.use('*', (request, response) => {
+  response.status(404).send('The route you are looking for is not available.');
+});
 app.listen(PORT, () => console.log(`server is up on port: ${PORT}`));
-
-      /* =================== Global Variables =================== */
-
-let currentLocation;
 
       /* ================== Object Constructor ================== */
 
 function locationObject(jsonLocationObj){
-  this.place_id = jsonLocationObj.place_id;
-  this.licence = jsonLocationObj.licence;
-  this.osm_type = jsonLocationObj.osm_type;
-  this.osm_id = jsonLocationObj.osm_id;
-  this.boundingbox = jsonLocationObj.boundingbox;
+  this.display_name = jsonLocationObj.display_name;
   this.lat = jsonLocationObj.lat;
   this.lon = jsonLocationObj.lon;
-  this.display_name = jsonLocationObj.display_name;
-  this.class = jsonLocationObj.class;
-  this.type = jsonLocationObj.type;
-  this.importance = jsonLocationObj.importance;
-  this.icon = jsonLocationObj.icon;
+}
+
+function weatherObject(jsonWeatherObj){
+  this.valid_date = jsonWeatherObj.valid_date;
+  this.wind_cdir = jsonWeatherObj.wind_cdir;
+  this.weatherDesc = jsonWeatherObj.weather.description;
+  this.low_temp = jsonWeatherObj.low_temp;
+  this.max_temp = jsonWeatherObj.max_temp;
 }
 
       /* ===================== Getting Data ===================== */
