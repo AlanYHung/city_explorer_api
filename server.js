@@ -1,39 +1,54 @@
 'use strict';
 
 
-/* ====================== Server Initialization ======================= */
+/* ======================= Server Dependencies ======================== */
 
 const express = require('express');
 const cors = require('cors');
+const pg = require('pg');
 const { response } = require('express');
 require('dotenv').config();
-const superagent = require('superagent')
+const superagent = require('superagent');
+const client = new pg.Client(process.env.DATABASE_URL);
 
 const app = express();
 const PORT = process.env.PORT || 9999;
 
-/* ============================ Middleware ============================ */
+/* ======================== Server Middleware ========================= */
 
 app.use(cors());
 
 /* ============================== Routes ============================== */
 
 app.get('/location', (locReq, locRes) => {
-  const locURL = 'https://us1.locationiq.com/v1/search.php';
-  superagent.get(locURL)
-    .query({
-      key: process.env.GEOCODE_API_KEY,
-      q: locReq.query.city || 'seattle',
-      format: 'json'
+  const sqlLocQuery = 'SELECT * FROM cityapiloc WHERE search_query = $1';
+  client.query(sqlLocQuery, [locReq.query.city])
+    .then(sqlData => {
+      if(sqlData.rows.length > 0){
+        locRes.send(sqlData.rows[0]);
+      }else{
+        console.log('entering else of location path')
+        const locURL = 'https://us1.locationiq.com/v1/search.php';
+        const sqlLocDataAdd = 'INSERT INTO cityapiloc (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING *;'
+        superagent.get(locURL)
+          .query({
+            key: process.env.GEOCODE_API_KEY,
+            q: locReq.query.city || 'seattle',
+            format: 'json'
+          })
+          .then(res => {
+            const instanceOfLocData = new locationObject(res.body[0], locReq.query.city);
+            locRes.send(instanceOfLocData);
+            console.log('Location Data Retrieved Sucessfully');
+            
+            client.query(sqlLocDataAdd, [locReq.query.city, instanceOfLocData.formatted_query, instanceOfLocData.latitude, instanceOfLocData.longitude])
+              .then(sqlDataResults => sqlDataResults.rows[0])
+              .catch(sqlAddErr => console.error(`SQL Data Add Error: ${sqlAddErr}`));
+          })
+          .catch(locErr => console.error(`Location Error: ${locErr}`));
+      }
     })
-    .then(res => {
-      const instanceOfLocData = new locationObject(res.body[0], locReq.query.city);
-      locRes.send(instanceOfLocData);
-      console.log('Location Data Retrieved Sucessfully');
-    })
-    .catch(() =>
-      console.log('Location Error')
-    )
+    .catch(sqlRetrErr => console.error(`SQL Data Retrieve Error: ${sqlRetrErr}`));
 });
 
 app.get('/weather', (weatherReq, weatherRes) => {
@@ -50,9 +65,7 @@ app.get('/weather', (weatherReq, weatherRes) => {
       weatherRes.send(weatherObjArr);    
       console.log('Weather Data Retrieved Successfully');
     })
-    .catch(() => {
-      console.log('Weather Error')
-    })
+    .catch(weatherErr => console.error(`Weather Error: ${weatherErr}`));
 });
 
 app.get('/trails', (trailReq, trailRes) => {
@@ -64,26 +77,30 @@ app.get('/trails', (trailReq, trailRes) => {
       lon: trailReq.query.longitude || '-122.3300624',
     })
     .then(res => {
-      let trailsObjArr = res.body.trails.map((tdArrVal,index) => {
-        if(index < 10){
-          return new trailsObject(tdArrVal);
-        }
-      });
+      let trailsObjArr = res.body.trails.map(tdArrVal => new trailsObject(tdArrVal));
       trailRes.send(trailsObjArr);
       console.log('Trails Data Retrieved Successfully');
     })
-    .catch(() => {
-      console.log('Trails Error')
-    });
+    .catch(trailsErr => console.error(`Trails Error: ${trailsErr}`));
 })
 
-/* ======================== Callback Functions ======================== */
+/* ====================== Server Initialization ======================= */
 
 app.use('*', (request, response) => {
   response.status(404).send('The route you are looking for is not available.');
+});
+
+app.use('*', (request, response) => {
   response.status(500).send('Sorry, something went wrong');
 });
+
+client.on('error', sqlError => console.error(`PG SQL Error: ${sqlError}`));
+client.connect();
 app.listen(PORT, () => console.log(`server is up on port: ${PORT}`));
+
+/* ======================== Callback Functions ======================== */
+
+
 
       /* ================== Object Constructor ================== */
 
