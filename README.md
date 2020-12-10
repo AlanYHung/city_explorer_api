@@ -110,15 +110,15 @@ Allows a user to search for a location, present a Map, as well as interesting in
     * Number and name of feature: <u>Add Postgres to Heroku</u>
     * Estimate of time needed to complete: <u>1 Hour</u>
     * Start time: <u>4:04</u>
-    * Finish time: <u></u>
-    * Actual time needed to complete: <u></u>
+    * Finish time: <u>4:16</u>
+    * Actual time needed to complete: <u>12 Min</u>
 
   #### Feature 4
-    * Number and name of feature: <u></u>
-    * Estimate of time needed to complete: <u></u>
-    * Start time: <u></u>
-    * Finish time: <u></u>
-    * Actual time needed to complete: <u></u>
+    * Number and name of feature: <u>Send Data from the SQL Table to the App</u>
+    * Estimate of time needed to complete: <u>N/A</u>
+    * Start time: <u>N/A</u>
+    * Finish time: <u>N/A</u>
+    * Actual time needed to complete: <u>Completed this with Feature 2</u>
 
 
 
