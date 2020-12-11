@@ -115,11 +115,9 @@ app.get('/yelp', (yelpReq, yelpRes) => {
     })
     .then(yelpResData => {
       const yelpResultArr = yelpResData.body.businesses;
-      for(let i = 0; i < yelpResultArr.length; i++){
-        let yelpBusinessArray = yelpResultArr.map(arrVal => new yelpObject(arrVal));
-        for(let j = (0 + ((yelpReq.query.page - 1) * 5)); j < yelpBusinessArray.length; j++){
-          yelpDisplayArr.push(yelpBusinessArray[j]);
-        }
+      let yelpBusinessArray = yelpResultArr.map(arrVal => new yelpObject(arrVal));
+      for(let j = (0 + ((yelpReq.query.page - 1) * 5)); j < yelpBusinessArray.length; j++){
+        yelpDisplayArr.push(yelpBusinessArray[j]);
       }
       yelpRes.send(yelpDisplayArr);
       console.log('Yelp Data Retrieved Successfully');
