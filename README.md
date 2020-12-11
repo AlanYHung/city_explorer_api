@@ -120,6 +120,33 @@ Allows a user to search for a location, present a Map, as well as interesting in
     * Finish time: <u>N/A</u>
     * Actual time needed to complete: <u>Completed this with Feature 2</u>
 
+## Lab 09
+  ### Time Estimate
+  #### Feature 1
+    * Number and name of feature: <u>Add Movie Route to APP</u>
+    * Estimate of time needed to complete: <u>1 Hour</u>
+    * Start time: <u>3:52</u>
+    * Stop time: <u>4:30</u>
+    * Restart time: <u>6:37</u>
+    * Stop time: <u>6:50</u>
+    * Restart time: <u>8:00</u>
+    * Finish time: <u>8:45</u>
+    * Actual time needed to complete: <u>1 Hr 36 Min</u>
+
+  #### Feature 2
+    * Number and name of feature: <u>Add Yelp Route to App</u>
+    * Estimate of time needed to complete: <u>1 Hour</u>
+    * Start time: <u>4:30</u>
+    * Finish time: <u>5:30</u>
+    * Actual time needed to complete: <u>1 Hour</u>
+
+  #### Feature 3
+    * Number and name of feature: <u>Yelp Pagination</u>
+    * Estimate of time needed to complete: <u>1 Hour</u>
+    * Start time: <u>5:30</u>
+    * Finish time: <u>6:35</u>
+    * Actual time needed to complete: <u>1 Hour 5 Min</u>
+
 
 
 ## Resources
